@@ -1,4 +1,4 @@
-const API_URL = "https://bloggingproject2-production.up.railway.app/api/posts";
+const API_URL = "https://bloggingproject2-production.up.railway.app/api";
 
 // LOAD POSTS
 function loadPosts() {
