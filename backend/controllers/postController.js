@@ -1,4 +1,4 @@
-const db = require("../db");
+/*const db = require("../db");
 
 // CREATE POST
 exports.createPost = (req, res) => {
@@ -35,5 +35,62 @@ exports.deletePost = (req, res) => {
         }
 
         res.send("Post Deleted ✅");
+    });
+};*/
+
+const db = require("../db");
+
+// CREATE POST
+exports.createPost = (req, res) => {
+    const { title, content, author } = req.body;
+
+    if (!title || !content) {
+        return res.status(400).json({ error: "All fields required" });
+    }
+
+    const sql = "INSERT INTO posts (title, content, author) VALUES (?, ?, ?)";
+
+    db.query(sql, [title, content, author], (err, result) => {
+        if (err) {
+            console.log("Create Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+
+        res.json({ message: "Post Created ✅" });
+    });
+};
+
+// GET ALL POSTS
+exports.getPosts = (req, res) => {
+    const sql = "SELECT * FROM posts ORDER BY created_at DESC";
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log("Get Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+
+        res.json(result);
+    });
+};
+
+// DELETE POST
+exports.deletePost = (req, res) => {
+    const id = req.params.id;
+    const user = req.body.user;
+
+    const sql = "DELETE FROM posts WHERE id=? AND author=?";
+
+    db.query(sql, [id, user], (err, result) => {
+        if (err) {
+            console.log("Delete Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.json({ error: "You can delete only your own post ❌" });
+        }
+
+        res.json({ message: "Post Deleted ✅" });
     });
 };
