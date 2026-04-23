@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://bloggingproject2-production.up.railway.app/api/posts";
 
 // LOAD POSTS
 function loadPosts() {
