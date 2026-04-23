@@ -222,8 +222,7 @@ function loadPosts() {
     <div class="d-flex align-items-center mb-2">
         <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-2"
             style="width:40px;height:40px;">
-            ${post.author ? post.author.charAt(5) : "U"}
-        </div>
+    ${post.author ? post.author.charAt(0).toUpperCase() : "U"}        </div>
 
         <div>
             <b>${post.author || "Unknown"}</b><br>
